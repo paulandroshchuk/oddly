@@ -53,5 +53,3 @@ it('shows only users entries', function () {
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.input', 'jacobs input');
 });
-
-

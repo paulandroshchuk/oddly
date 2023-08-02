@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\EntryResource;
-use Illuminate\Http\Request;
 
 class ViewEntriesController extends Controller
 {
