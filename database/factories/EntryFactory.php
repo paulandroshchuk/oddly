@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,5 +15,10 @@ class EntryFactory extends Factory
         return [
             'input' => $this->faker->word(),
         ];
+    }
+
+    public function forRandomUser(): self
+    {
+        return $this->for(User::factory());
     }
 }
