@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Actions\Entries\GuessEntryType as EntryTypeGuesser;
+use App\Prompts\GuessEntryType as EntryTypePrompt;
 use App\Enums\EntryStatus;
 use App\Enums\EntryType;
 use App\Models\Entry;
@@ -26,9 +26,9 @@ class GuessEntryType implements ShouldQueue
         $this->entry = $entry;
     }
 
-    public function handle(EntryTypeGuesser $guessEntryType): void
+    public function handle(): void
     {
-        $this->entry->type = $guessEntryType($this->entry);
+        $this->entry->type = EntryType::from(new EntryTypePrompt($this->entry));
         $this->entry->status = EntryStatus::DONE;
         $this->entry->save();
     }
