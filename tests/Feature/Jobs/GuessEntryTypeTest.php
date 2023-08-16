@@ -5,12 +5,15 @@ it('processes failures correctly', function () {
         ->forRandomUser()
         ->create();
 
-    $this->mock(\App\Actions\Entries\GuessEntryType::class)
-        ->shouldReceive('__invoke')
-        ->andThrow(new Exception('Something went wrong'));
+    \OpenAI\Laravel\Facades\OpenAI::fake([
+        \OpenAI\Responses\Completions\CreateResponse::fake([
+            'choices' => [['text' => 'foo...']],
+        ]),
+    ]);
 
     $this->assertThrows(
         test: fn () => \App\Jobs\GuessEntryType::dispatch($entry),
+        expectedMessage: 'is not a valid backing value',
     );
 
     $entry->refresh();
@@ -25,6 +28,12 @@ it('guesses entry type', function () {
         ->create([
             'input' => 'apple',
         ]);
+
+    \OpenAI\Laravel\Facades\OpenAI::fake([
+        \OpenAI\Responses\Completions\CreateResponse::fake([
+            'choices' => [['text' => 'WORD']],
+        ]),
+    ]);
 
     \App\Jobs\GuessEntryType::dispatch($entry);
 
