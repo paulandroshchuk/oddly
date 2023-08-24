@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Entry;
+use App\Observers\EntryObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -9,6 +11,17 @@ use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
+    /**
+     * The model observers to register.
+     *
+     * @var array<string, string|object|array<int, string|object>>
+     */
+    protected $observers = [
+        Entry::class => [
+            EntryObserver::class,
+        ]
+    ];
+
     /**
      * The event to listener mappings for the application.
      *
