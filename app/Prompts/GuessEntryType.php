@@ -25,7 +25,7 @@ It can be only one of the following:
 - PHRASE
 - UNKNOWN
 
-Respond only with the word type. If you are not able to determine the type, respond with unknown.
+Respond only with the word type. If you are not able to determine the type, respond with UNKNOWN.
 PROMPT;
     }
 }
