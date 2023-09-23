@@ -52,6 +52,9 @@ jobs:
           DB_PASSWORD: secret
           DB_DATABASE: oddly
 
+      - name: Compile Assets
+        run: npm install && npm run dev
+
       - name: Tests
         run: ./vendor/bin/pest tests
         env:
