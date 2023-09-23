@@ -48,8 +48,9 @@ jobs:
       - name: Run Migration
         run: php artisan migrate -v
         env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-          REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+          DB_USERNAME: root
+          DB_PASSWORD: secret
+          DB_DATABASE: oddly
 
       - name: Tests
         run: ./vendor/bin/pest tests
