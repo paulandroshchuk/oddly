@@ -61,3 +61,4 @@ jobs:
           DB_USERNAME: root
           DB_PASSWORD: secret
           DB_DATABASE: oddly
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
