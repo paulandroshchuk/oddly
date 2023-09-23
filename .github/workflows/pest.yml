@@ -11,7 +11,7 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: secret
           MYSQL_DATABASE: oddly
         ports:
           - 3306:3306
@@ -53,3 +53,7 @@ jobs:
 
       - name: Tests
         run: ./vendor/bin/pest tests
+        env:
+          DB_USERNAME: root
+          DB_PASSWORD: secret
+          DB_DATABASE: oddly
