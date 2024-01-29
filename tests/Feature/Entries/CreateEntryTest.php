@@ -51,6 +51,18 @@ it('asserts type to be valid', function () {
         ]);
 });
 
+it('requires context when type is WORD_MEANING_IN_PHRASE', function () {
+    actingAs(User::factory()->create())
+        ->postJson('/api/entries', [
+            'input' => 'something',
+            'type' => EntryType::WORD_MEANING_IN_PHRASE->value,
+        ])
+        ->assertUnprocessable()
+        ->assertInvalid([
+            'context' => ['required'],
+        ]);
+});
+
 it('cannot create a WORD_MEANING_IN_PHRASE with entry longer than 100 characters long', function () {
     actingAs(User::factory()->create())
         ->postJson('/api/entries', [
@@ -70,6 +82,7 @@ it('creates an entry with type WORD_MEANING_IN_PHRASE', function () {
         ->post('/api/entries', [
             'input' => 'comprehend',
             'type' => EntryType::WORD_MEANING_IN_PHRASE->value,
+            'context' => 'foo',
         ])
         ->assertSuccessful()
         ->assertExactJson([
@@ -87,7 +100,7 @@ it('creates an entry with type WORD_MEANING_IN_PHRASE', function () {
     ]);
 
     Bus::assertDispatched(
-        fn (GuessWordMeaningInPhrase $job) => $job->entry->is($entry),
+        fn (GuessWordMeaningInPhrase $job) => $job->entry->is($entry) && $job->entry->context === 'foo',
     );
     Bus::assertDispatchedTimes(GuessWordMeaningInPhrase::class, 1);
 });
