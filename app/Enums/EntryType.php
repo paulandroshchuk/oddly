@@ -4,7 +4,6 @@ namespace App\Enums;
 
 enum EntryType: string
 {
-    case WORD = 'WORD';
-    case PHRASE = 'PHRASE';
+    case WORD_MEANING_IN_PHRASE = 'WORD_MEANING_IN_PHRASE';
     case UNKNOWN = 'UNKNOWN';
 }

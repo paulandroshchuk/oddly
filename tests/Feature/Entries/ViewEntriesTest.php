@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EntryType;
 use App\Models\Entry;
 use App\Models\User;
 use function Pest\Laravel\actingAs;
@@ -12,11 +13,11 @@ it('throws 401 when guest reads entries', function () {
 it('shows users entries', function () {
     $user = User::factory()->create();
 
-    Entry::factory()
+    [$dog, $cat] = Entry::factory()
         ->for($user)
         ->forEachSequence(
-            ['input' => 'order entry'],
-            ['input' => 'earlier entry'],
+            ['input' => 'dog', 'type' => EntryType::WORD_MEANING_IN_PHRASE],
+            ['input' => 'cat', 'type' => EntryType::WORD_MEANING_IN_PHRASE],
         )
         ->create();
 
@@ -24,8 +25,12 @@ it('shows users entries', function () {
         ->getJson('/api/entries')
         ->assertSuccessful()
         ->assertJsonCount(2, 'data')
-        ->assertJsonPath('data.0.input', 'earlier entry')
-        ->assertJsonPath('data.1.input', 'order entry');
+        ->assertJsonPath('data.0.id', $cat->id)
+        ->assertJsonPath('data.0.input', 'cat')
+        ->assertJsonPath('data.0.type', 'WORD_MEANING_IN_PHRASE')
+        ->assertJsonPath('data.1.id', $dog->id)
+        ->assertJsonPath('data.1.input', 'dog')
+        ->assertJsonPath('data.1.type', 'WORD_MEANING_IN_PHRASE');
 });
 
 it('shows only users entries', function () {
@@ -35,11 +40,11 @@ it('shows only users entries', function () {
 
     Entry::factory()
         ->for($paul)
-        ->create(['input' => 'pauls input']);
+        ->create(['input' => 'pauls input', 'type' => EntryType::WORD_MEANING_IN_PHRASE]);
 
     Entry::factory()
         ->for($jacob)
-        ->create(['input' => 'jacobs input']);
+        ->create(['input' => 'jacobs input', 'type' => EntryType::WORD_MEANING_IN_PHRASE]);
 
     actingAs($paul)
         ->getJson('/api/entries')

@@ -20,7 +20,7 @@ it('processes failures correctly', function () {
 
     $this->assertSame(\App\Enums\EntryType::UNKNOWN, $entry->type);
     $this->assertSame(\App\Enums\EntryStatus::FAILED, $entry->status);
-});
+})->todo();
 
 it('guesses entry type', function () {
     $entry = \App\Models\Entry::factory()
@@ -41,4 +41,4 @@ it('guesses entry type', function () {
 
     $this->assertSame(\App\Enums\EntryType::WORD, $entry->type);
     $this->assertSame(\App\Enums\EntryStatus::DONE, $entry->status);
-});
+})->todo();

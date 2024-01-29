@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Api\Entries;
 
+use App\Enums\EntryType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateEntryRequest extends FormRequest
 {
@@ -12,7 +14,12 @@ class CreateEntryRequest extends FormRequest
             'input' => [
                 'required',
                 'string',
+                'max:100',
             ],
+            'type' => [
+                'required',
+                Rule::enum(EntryType::class),
+            ]
         ];
     }
 }

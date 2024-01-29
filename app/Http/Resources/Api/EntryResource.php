@@ -14,6 +14,8 @@ class EntryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->getKey(),
+            'type' => $this->type,
             'input' => $this->input,
         ];
     }

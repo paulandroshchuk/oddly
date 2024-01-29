@@ -17,9 +17,7 @@ return new class extends Migration
                 \App\Enums\EntryStatus::FAILED->value,
             ])->nullable();
             $table->enum('type', [
-                \App\Enums\EntryType::WORD->value,
-                \App\Enums\EntryType::PHRASE->value,
-                \App\Enums\EntryType::UNKNOWN->value,
+                \App\Enums\EntryType::WORD_MEANING_IN_PHRASE->value,
             ])->nullable();
             $table->text('input');
             $table->timestamps();
