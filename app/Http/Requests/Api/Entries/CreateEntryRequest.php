@@ -9,7 +9,10 @@ class CreateEntryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'input' => ['required', 'string'],
+            'input' => [
+                'required',
+                'string',
+            ],
         ];
     }
 }
