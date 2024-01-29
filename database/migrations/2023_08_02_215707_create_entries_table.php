@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('type', [
                 \App\Enums\EntryType::WORD_MEANING_IN_PHRASE->value,
             ])->nullable();
+            $table->text('meaning')->nullable();
             $table->text('context')->nullable();
             $table->text('input');
             $table->timestamps();

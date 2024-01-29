@@ -27,4 +27,14 @@ class Entry extends Model
     {
         return $this->belongsTo(Entry::class);
     }
+
+    public function result()
+    {
+        return $this->morphTo();
+    }
+
+    public function setFailed(): void
+    {
+        $this->status = EntryStatus::FAILED;
+    }
 }

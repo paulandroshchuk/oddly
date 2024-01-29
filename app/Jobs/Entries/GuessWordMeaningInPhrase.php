@@ -2,7 +2,9 @@
 
 namespace App\Jobs\Entries;
 
+use App\Enums\EntryStatus;
 use App\Models\Entry;
+use App\Prompts\GuessWordMeaningInPhrase as GuessWordMeaningInPhrasePrompt;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,6 +20,8 @@ class GuessWordMeaningInPhrase implements ShouldQueue
     #[WithoutRelations]
     public Entry $entry;
 
+    public int $maxExceptions = 3;
+
     public function __construct(Entry $entry)
     {
         $this->entry = $entry;
@@ -25,6 +29,13 @@ class GuessWordMeaningInPhrase implements ShouldQueue
 
     public function handle(): void
     {
-        //
+        $this->entry->meaning = new GuessWordMeaningInPhrasePrompt($this->entry);
+        $this->entry->save();
+    }
+
+    public function failed(): void
+    {
+        $this->entry->setFailed();
+        $this->entry->save();
     }
 }
