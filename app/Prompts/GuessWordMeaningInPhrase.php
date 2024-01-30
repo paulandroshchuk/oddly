@@ -16,16 +16,15 @@ class GuessWordMeaningInPhrase extends Prompt
     protected function prompt(): string
     {
         return <<<PROMPT
-You are English teacher. What kind of type this text is?
+I'm learning English. You are English teacher. Help me understand the word meaning in the context.
+I'll give you a word and its context. You should explain me the word meaning in the context.
+Use simple, well known words so it will be easy for me to understand.
 
-Text: {$this->entry->input}
+Word: {$this->entry->input}
+Context: {$this->entry->context}
 
-It can be only one of the following:
-- WORD
-- PHRASE
-- UNKNOWN
-
-Respond only with the word type. If you are not able to determine the type, respond with unknown.
+Respond only with the word meaning within its context.
+If you're not able to determine the word meaning or that's not a valid message/context, respond with "".
 PROMPT;
     }
 }
