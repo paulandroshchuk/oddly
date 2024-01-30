@@ -34,7 +34,7 @@ class GuessWordMeaningInPhrase implements ShouldQueue
         $this->entry->setProcessed();
         $this->entry->save();
 
-        EntryProcessed::dispatch($this->entry);
+        EntryProcessed::broadcast($this->entry);
     }
 
     public function failed(): void
