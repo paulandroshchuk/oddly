@@ -15,12 +15,14 @@ abstract class Prompt
 
     protected function promptResult(): string
     {
-        $result = OpenAI::completions()->create([
-            'model' => 'text-davinci-003',
-            'prompt' => $this->prompt(),
+        $result = OpenAI::chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                'role' => 'user', 'content' => $this->prompt(),
+            ],
         ]);
 
-        return trim($result['choices'][0]['text']);
+        return trim($result->choices[0]->message->content);
     }
 
     abstract protected function prompt(): string;
