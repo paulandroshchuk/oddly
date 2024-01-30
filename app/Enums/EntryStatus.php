@@ -6,7 +6,7 @@ enum EntryStatus: string
 {
     case PROCESSING = 'PROCESSING';
     case FAILED = 'FAILED';
-    case DONE = 'DONE';
+    case PROCESSED = 'PROCESSED';
 
     public function isProcessing(): bool
     {
@@ -16,5 +16,10 @@ enum EntryStatus: string
     public function isFailed(): bool
     {
         return $this === self::FAILED;
+    }
+
+    public function isProcessed(): bool
+    {
+        return $this === self::PROCESSED;
     }
 }

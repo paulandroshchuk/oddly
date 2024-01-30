@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->enum('status', [
                 \App\Enums\EntryStatus::PROCESSING->value,
-                \App\Enums\EntryStatus::DONE->value,
+                \App\Enums\EntryStatus::PROCESSED->value,
                 \App\Enums\EntryStatus::FAILED->value,
             ])->nullable();
             $table->enum('type', [

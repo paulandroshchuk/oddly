@@ -37,4 +37,9 @@ class Entry extends Model
     {
         $this->status = EntryStatus::FAILED;
     }
+
+    public function setProcessed(): void
+    {
+        $this->status = EntryStatus::PROCESSED;
+    }
 }

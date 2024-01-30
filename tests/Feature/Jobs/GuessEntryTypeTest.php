@@ -40,5 +40,5 @@ it('guesses entry type', function () {
     $entry->refresh();
 
     $this->assertSame(\App\Enums\EntryType::WORD, $entry->type);
-    $this->assertSame(\App\Enums\EntryStatus::DONE, $entry->status);
+    $this->assertSame(\App\Enums\EntryStatus::PROCESSED, $entry->status);
 })->todo();

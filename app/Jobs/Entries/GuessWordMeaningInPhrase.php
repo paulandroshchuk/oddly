@@ -3,6 +3,7 @@
 namespace App\Jobs\Entries;
 
 use App\Enums\EntryStatus;
+use App\Events\Entries\EntryProcessed;
 use App\Models\Entry;
 use App\Prompts\GuessWordMeaningInPhrase as GuessWordMeaningInPhrasePrompt;
 use Illuminate\Bus\Queueable;
@@ -30,7 +31,10 @@ class GuessWordMeaningInPhrase implements ShouldQueue
     public function handle(): void
     {
         $this->entry->meaning = new GuessWordMeaningInPhrasePrompt($this->entry);
+        $this->entry->setProcessed();
         $this->entry->save();
+
+        EntryProcessed::dispatch($this->entry);
     }
 
     public function failed(): void

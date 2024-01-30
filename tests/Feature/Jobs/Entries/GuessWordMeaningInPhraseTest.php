@@ -2,10 +2,18 @@
 
 use App\Enums\EntryStatus;
 use App\Enums\EntryType;
+use App\Events\Entries\EntryProcessed;
 use App\Jobs\Entries\GuessWordMeaningInPhrase;
 use App\Models\Entry;
+use Illuminate\Support\Facades\Event;
 use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Responses\Completions\CreateResponse;
+
+beforeEach(function () {
+    Event::fake([
+        EntryProcessed::class,
+    ]);
+});
 
 it('guesses word meaning in phrase', function () {
     $entry = Entry::factory()
@@ -44,14 +52,46 @@ it('marks entry as failed when job fails', function () {
     $this->assertTrue($entry->fresh()->status->isFailed());
 });
 
-it('throws exception when entry context is null', function () {
-    //
-})->todo();
-
 it('marks entry as finished when job finishes', function () {
-    //
-})->todo();
+    $entry = Entry::factory()
+        ->forRandomUser()
+        ->create([
+            'input' => 'apple',
+            'status' => EntryStatus::PROCESSING,
+            'type' => EntryType::WORD_MEANING_IN_PHRASE,
+        ]);
 
-it('broadcastes entry finished event when job finishes', function () {
-    //
-})->todo();
+    OpenAI::fake([
+        CreateResponse::fake([
+            'choices' => [['text' => 'it describes color of the fruit']],
+        ]),
+    ]);
+
+    GuessWordMeaningInPhrase::dispatchSync($entry);
+
+    $this->assertTrue($entry->refresh()->status->isProcessed());
+});
+
+it('broadcasts EntryProcessed event when job processed', function () {
+    $entry = Entry::factory()
+        ->forRandomUser()
+        ->create([
+            'input' => 'apple',
+            'status' => EntryStatus::PROCESSING,
+            'type' => EntryType::WORD_MEANING_IN_PHRASE,
+        ]);
+
+    OpenAI::fake([
+        CreateResponse::fake([
+            'choices' => [['text' => 'it describes color of the fruit']],
+        ]),
+    ]);
+
+    GuessWordMeaningInPhrase::dispatchSync($entry);
+
+    $this->assertTrue($entry->refresh()->status->isProcessed());
+
+    Event::assertDispatched(
+        fn (EntryProcessed $event) => $event->entry->is($entry),
+    );
+});

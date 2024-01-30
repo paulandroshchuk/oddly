@@ -29,7 +29,7 @@ class GuessEntryType implements ShouldQueue
     public function handle(): void
     {
         $this->entry->type = EntryType::from(new EntryTypePrompt($this->entry));
-        $this->entry->status = EntryStatus::DONE;
+        $this->entry->status = EntryStatus::PROCESSED;
         $this->entry->save();
     }
 
