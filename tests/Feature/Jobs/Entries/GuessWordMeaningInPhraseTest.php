@@ -95,3 +95,7 @@ it('broadcasts EntryProcessed event when job processed', function () {
         fn (EntryProcessed $event) => $event->entry->is($entry),
     );
 });
+
+it('uses correct prompt to process WORD_MEANING_IN_PHRASE', function () {
+    //
+})->todo();
