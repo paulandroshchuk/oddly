@@ -20,7 +20,6 @@ class Entry extends Model
 
     protected $attributes = [
         'status' => EntryStatus::PROCESSING,
-        'type' => EntryType::UNKNOWN,
     ];
 
     public function user()
