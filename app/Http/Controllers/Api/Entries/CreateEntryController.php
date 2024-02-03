@@ -18,12 +18,12 @@ class CreateEntryController extends Controller
             ->entries()
             ->create($request->safe()->all());
 
-        $this->dispatchJob($entry);
+        $this->processEntry($entry);
 
         return EntryResource::make($entry);
     }
 
-    private function dispatchJob(Entry $entry): void
+    private function processEntry(Entry $entry): void
     {
         match ($entry->type) {
             EntryType::WORD_MEANING_IN_PHRASE => GuessWordMeaningInPhrase::dispatch($entry),
