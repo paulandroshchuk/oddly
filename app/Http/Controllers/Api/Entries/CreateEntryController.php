@@ -20,6 +20,9 @@ class CreateEntryController extends Controller
 
         $this->processEntry($entry);
 
+        // TODO: Remove this from prod
+        $entry->refresh();
+
         return EntryResource::make($entry);
     }
 

@@ -33,6 +33,25 @@ it('shows users entries', function () {
         ->assertJsonPath('data.1.type', 'WORD_MEANING_IN_PHRASE');
 });
 
+it('shows entry meaning for WORD_MEANING_IN_PHRASE entries', function () {
+    $user = User::factory()->create();
+
+    $dog = Entry::factory()
+        ->for($user)
+        ->create([
+            'input' => 'dog',
+            'type' => EntryType::WORD_MEANING_IN_PHRASE,
+            'meaning' => 'An animal.',
+        ]);
+
+    actingAs($user)
+        ->getJson('/api/entries')
+        ->assertSuccessful()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', $dog->id)
+        ->assertJsonPath('data.0.meta.meaning', 'An animal.');
+});
+
 it('shows only users entries', function () {
     [$paul, $jacob] = User::factory()
         ->count(2)

@@ -1,7 +1,10 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
+import { createApp } from 'vue';
+import WordMeaningInPhrase from './components/entries/WordMeaningInPhrase.vue';
 
-window.Alpine = Alpine;
+const app = createApp();
 
-Alpine.start();
+app.component('WordMeaningInPhrase', WordMeaningInPhrase)
+
+app.mount('#app');
