@@ -28,6 +28,7 @@ class EntryResource extends JsonResource
         $data = match ($this->type) {
             EntryType::WORD_MEANING_IN_PHRASE => [
                 'meaning' => $this->meaning,
+                'context' => $this->context,
             ],
         };
 

@@ -65,14 +65,12 @@ function submit() {
             </div>
             <div class="shadow-xl p-5 rounded-xl flex flex-col justify-between" v-if="response">
                 <div>
-                    <p>Word: {{ response.input }} <small class="underline">Try different word</small></p>
-                    <p>Context: <b class="underline text-orange-400 border border-orange-500 rounded px-1 py-0.5 border-dashed">Hey</b> there, dude!</p>
-                    <div>
-                        The meaning of the word hey in the provided text is it describes the greeting of a person.
-                        <ul>
-                            <li>* View sample sentences</li>
-                        </ul>
+                    <p><a href="#" class="underline text-orange-400 border border-orange-500 rounded px-1 py-0.5 border-dashed">{{ response.input }}</a> <small>(used as an <span class="underline text-blue-700 cursor-pointer">adjective</span>)</small></p>
+
+                    <div class="mt-5 p-2 border-2 border-dashed border-orange-400 rounded-md">
+                        {{ response.meta.context }}
                     </div>
+
                     <div class="mt-5 p-2 border-2 border-dashed border-orange-400 rounded-md">
                         {{ response.meta.meaning }}
                     </div>
