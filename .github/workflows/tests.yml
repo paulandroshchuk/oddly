@@ -18,7 +18,7 @@ jobs:
           coverage: xdebug
 
       - name: Setup MySQL
-        uses: mirromutth/mysql-action@v2
+        uses: mirromutth/mysql-action@main
         with:
           mysql-version: '8.0'
           databases: oddly
