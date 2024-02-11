@@ -6,6 +6,13 @@ jobs:
   ci:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: oddly
+          MYSQL_USER: root
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -16,12 +23,6 @@ jobs:
           php-version: 8.2
           tools: composer:v2
           coverage: xdebug
-
-      - name: Setup MySQL
-        uses: mirromutth/mysql-action@v2
-        with:
-          mysql-version: '8.0'
-          databases: oddly
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
