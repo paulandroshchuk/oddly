@@ -17,6 +17,12 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v2
+        with:
+          mysql-version: '8.0'
+          databases: oddly
+
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
