@@ -16,9 +16,11 @@ return new class extends Migration
                 \App\Enums\EntryStatus::PROCESSED->value,
                 \App\Enums\EntryStatus::FAILED->value,
             ])->nullable();
-            $table->enum('type', [
-                \App\Enums\EntryType::WORD_MEANING_IN_PHRASE->value,
-            ])->nullable();
+            $table->enum('type', collect(\App\Enums\EntryType::cases())
+                ->map
+                ->value
+                ->toArray(),
+            )->nullable();
             $table->text('meaning')->nullable();
             $table->text('context')->nullable();
             $table->text('input');

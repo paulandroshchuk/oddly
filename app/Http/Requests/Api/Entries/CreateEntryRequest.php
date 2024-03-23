@@ -16,20 +16,6 @@ class CreateEntryRequest extends FormRequest
                 'string',
                 'max:100',
             ],
-            'type' => [
-                'required',
-                Rule::enum(EntryType::class),
-            ],
-            'context' => Rule::when($this->type()?->wordMeaningInPhrase(), [
-                'required',
-                'string',
-                'max:3000',
-            ]),
         ];
-    }
-
-    protected function type(): ?EntryType
-    {
-        return $this->enum('type', EntryType::class);
     }
 }

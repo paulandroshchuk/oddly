@@ -4,11 +4,21 @@ namespace App\Enums;
 
 enum EntryType: string
 {
-    case WORD_MEANING_IN_PHRASE = 'WORD_MEANING_IN_PHRASE';
-    case UNKNOWN = 'UNKNOWN';
+    case WORD = 'WORD';
+    case CLAUSE = 'CLAUSE';
+    case PHRASE = 'PHRASE';
+    case SENTENCE = 'SENTENCE';
+    case TEXT = 'TEXT';
+    case OTHER = 'OTHER';
 
-    public function wordMeaningInPhrase(): bool
+    public function title(): string
     {
-        return $this === self::WORD_MEANING_IN_PHRASE;
+        if ($this === self::OTHER) {
+            return 'Other';
+        }
+
+        return str($this->value)
+            ->title()
+            ->plural();
     }
 }

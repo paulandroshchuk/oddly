@@ -6,7 +6,7 @@ use App\Enums\EntryType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Entries\CreateEntryRequest;
 use App\Http\Resources\Api\EntryResource;
-use App\Jobs\Entries\GuessWordMeaningInPhrase;
+use App\Jobs\GuessEntryType;
 use App\Models\Entry;
 
 class CreateEntryController extends Controller
@@ -18,18 +18,8 @@ class CreateEntryController extends Controller
             ->entries()
             ->create($request->safe()->all());
 
-        $this->processEntry($entry);
-
-        // TODO: Remove this from prod
-        $entry->refresh();
+        GuessEntryType::dispatch($entry);
 
         return EntryResource::make($entry);
-    }
-
-    private function processEntry(Entry $entry): void
-    {
-        match ($entry->type) {
-            EntryType::WORD_MEANING_IN_PHRASE => GuessWordMeaningInPhrase::dispatch($entry),
-        };
     }
 }

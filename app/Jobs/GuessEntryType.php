@@ -36,7 +36,7 @@ class GuessEntryType implements ShouldQueue
     public function failed(): void
     {
         $this->entry->status = EntryStatus::FAILED;
-        $this->entry->type = EntryType::UNKNOWN;
+        $this->entry->type = EntryType::OTHER;
         $this->entry->save();
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Entries;
+use App\Http\Controllers\Api\EntryTypes;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/entries', \App\Http\Controllers\Api\Entries\ViewEntriesController::class);
-    Route::post('/entries', \App\Http\Controllers\Api\Entries\CreateEntryController::class);
+    Route::get('/entry-types', EntryTypes\ViewEntryTypesController::class);
+
+    Route::get('/entries', Entries\ViewEntriesController::class);
+    Route::get('/entries/{entry}', Entries\ViewEntryController::class);
+    Route::post('/entries', Entries\CreateEntryController::class);
+
+    Route::get('/entries/{entry}/samples', Entries\ViewSamplesController::class);
 });

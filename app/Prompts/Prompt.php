@@ -2,6 +2,7 @@
 
 namespace App\Prompts;
 
+use Illuminate\Support\Arr;
 use OpenAI\Laravel\Facades\OpenAI;
 
 abstract class Prompt
@@ -16,14 +17,30 @@ abstract class Prompt
     protected function promptResult(): string
     {
         $result = OpenAI::chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'user', 'content' => $this->prompt()],
-            ],
+            'model' => 'gpt-4',
+            'messages' => $this->getMessages(),
         ]);
 
         return trim($result->choices[0]->message->content);
     }
 
-    abstract protected function prompt(): string;
+    protected function getMessages(): array
+    {
+        return collect((new \ReflectionClass($this))->getMethods())
+            ->map(function (\ReflectionMethod $method) {
+                $attribute = Arr::first($method->getAttributes(Message::class));
+
+                if (blank($attribute)) {
+                    return null;
+                }
+
+                return [
+                    'role' => $attribute->getArguments()[0]->role(),
+                    'content' => $method->invoke($this),
+                ];
+            })
+            ->filter()
+            ->values()
+            ->toArray();
+    }
 }
