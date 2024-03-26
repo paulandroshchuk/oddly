@@ -36,8 +36,5 @@ class AppServiceProvider extends ServiceProvider
                 report('Slow query detected: '.$query->sql);
             },
         );
-
-        // TODO: Add Slack notifications
-//        Horizon::routeSlackNotificationsTo('slack-webhook-url', '#channel');
     }
 }
