@@ -11,6 +11,7 @@ use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,5 +36,8 @@ class AppServiceProvider extends ServiceProvider
                 report('Slow query detected: '.$query->sql);
             },
         );
+
+        // TODO: Add Slack notifications
+//        Horizon::routeSlackNotificationsTo('slack-webhook-url', '#channel');
     }
 }
