@@ -19,6 +19,8 @@ onMounted(() => {
     <div class="border-r">
         <div>
             <h1>👀 Articles</h1>
+            <h1>✍️ The Elements of Style</h1>
+            <h1>🏈 Lifestyle</h1>
         </div>
 
         <div class="mt-5">

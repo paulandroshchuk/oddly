@@ -12,7 +12,7 @@ it('processes failures correctly', function () {
     ]);
 
     $this->assertThrows(
-        test: fn () => \App\Jobs\GuessEntryType::dispatch($entry),
+        test: fn () => \App\Jobs\Entries\GuessEntryType::dispatch($entry),
         expectedMessage: 'is not a valid backing value',
     );
 
@@ -35,7 +35,7 @@ it('guesses entry type', function () {
         ]),
     ]);
 
-    \App\Jobs\GuessEntryType::dispatch($entry);
+    \App\Jobs\Entries\GuessEntryType::dispatch($entry);
 
     $entry->refresh();
 

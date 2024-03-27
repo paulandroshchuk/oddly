@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\Entries;
 
-use App\Enums\EntryType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Entries\CreateEntryRequest;
 use App\Http\Resources\Api\EntryResource;
-use App\Jobs\GuessEntryType;
+use App\Jobs\Entries\GuessEntryType;
 use App\Models\Entry;
 
 class CreateEntryController extends Controller

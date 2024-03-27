@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Entries;
 
-use App\Prompts\GuessEntryType as EntryTypePrompt;
-use App\Enums\EntryStatus;
-use App\Enums\EntryType;
 use App\Models\Entry;
+use App\Prompts\EntryDescription;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class GuessEntryType implements ShouldQueue
+class ComeUpWithWordDescription implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -28,15 +25,13 @@ class GuessEntryType implements ShouldQueue
 
     public function handle(): void
     {
-        $this->entry->type = EntryType::from(new EntryTypePrompt($this->entry));
-        $this->entry->status = EntryStatus::PROCESSED;
+        $this->entry->description = new EntryDescription($this->entry);
         $this->entry->save();
     }
 
     public function failed(): void
     {
-        $this->entry->status = EntryStatus::FAILED;
-        $this->entry->type = EntryType::OTHER;
+        $this->entry->description = 'Failed to load description...';
         $this->entry->save();
     }
 }

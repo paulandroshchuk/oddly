@@ -19,6 +19,7 @@ class EntryResource extends JsonResource
             'id' => $this->getKey(),
             'type' => $this->type,
             'input' => $this->input,
+            'description' => $this->description,
         ];
     }
 }
