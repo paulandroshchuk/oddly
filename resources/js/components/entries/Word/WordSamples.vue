@@ -25,6 +25,11 @@ function loadSamples() {
 <template>
     <div class="p-2 border-l-green-400 border-l-2">
         <h2 class="text-xl font-bold tracking-tight text-gray-900 sm:text-xl">#samples</h2>
+
+        <div>
+            Real spoken English examples. Not by rules but regular everyday English.
+        </div>
+
         <div class="bg-gray-100 p-2 rounded">
             <ul>
                 <li>- Hey do you think that is something good?</li>
